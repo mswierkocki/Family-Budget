@@ -18,6 +18,7 @@ class ProfileRequiredMixin(LoginRequiredMixin):
 
 class HomeView(ProfileRequiredMixin, ListView):
     model = Budget
+
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         shared_budgets = Budget.objects.filter(
