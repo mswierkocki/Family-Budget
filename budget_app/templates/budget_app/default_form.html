@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block title %}{{title}}{% endblock %}
 {% load bootstrap5 %}
 
 {% bootstrap_css %}
@@ -8,12 +8,16 @@
 {% bootstrap_messages %}
 
 {% block content %}
-
+{% if heading %}
+<h1>{{heading}}</h1>
+{% endif %}
 <form method="post">{% csrf_token %}
     {% bootstrap_form_errors form %}
     {% bootstrap_form form %}
     {% bootstrap_button button_type="submit" content="Add" %}
     <a href="javascript:history.back()" class="btn btn-outline-primary">Go Back</a>
 </form>
-
+{% if additional %}
+<h1>{{additional|safe}}</h1>
+{% endif %}
 {% endblock %}

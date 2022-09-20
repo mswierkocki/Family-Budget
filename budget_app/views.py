@@ -2,9 +2,8 @@ import itertools
 from decimal import Decimal
 
 # Django Related
-from django.shortcuts import render
-from django.core.paginator import Paginator
 from django.urls import reverse_lazy
+from django.utils.safestring import mark_safe
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -13,8 +12,8 @@ from django.http import HttpResponseForbidden
 from django.db.models import Sum
 from django.conf import settings
 
-#app related
-from .forms import BudgetUpdateForm, NewIncomeForm
+# app related
+from .forms import BudgetUpdateForm, NewIncomeForm, NewExpenseForm
 from .models import Budget, Income, Expense, ExpenseCategory
 
 # Constants
@@ -23,6 +22,7 @@ BUDGET_DETAILS_PAGINATION_BY = getattr(
     settings, "BUDGET_DETAILS_PAGINATION_BY", 10)
 TWOPLACES = Decimal(10) ** -2
 # Mixins
+
 
 class ProfileRequiredMixin(LoginRequiredMixin):
     """Verify that the current user has profile."""
@@ -56,14 +56,18 @@ class HomeView(ProfileRequiredMixin, ListView):
 
     def get_queryset(self):
         return Budget.objects.filter(owner=self.request.user.profile)
-class BudgetCreateView(ProfileRequiredMixin,CreateView):
+
+
+class BudgetCreateView(ProfileRequiredMixin, CreateView):
     model = Budget
-    fields=['name']
+    fields = ['name']
+
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
-        #self.object = form.save(commit=False)
         form.instance.owner = self.request.user.profile
         return super().form_valid(form)
+
+
 class BudgetDetailView(ProfileRequiredMixin, DetailView):
     model = Budget
     paginate_by = 2
@@ -109,16 +113,40 @@ class BudgetDeleteView(OwnerRequiredMixin, DeleteView):
 
 class ExpenseCategoryAddView(CreateView, ProfileRequiredMixin):
     model = ExpenseCategory
+    fields = ['name']
     template_name = 'budget_app/default_form.html'
+    success_url = "/"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Add new Expense category"
+        context['heading'] = context['title']
+        return context
 
 
 class ExpenseAddView(CreateView, ProfileRequiredMixin):
     model = Expense
     template_name = 'budget_app/default_form.html'
+    form_class = NewExpenseForm
 
     def get_success_url(self) -> str:
         budget_id = self.kwargs['budget_pk']
         return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Add new Expense"
+        context['heading'] = context['title']
+        context['additional'] = mark_safe("<h6><a href={}>{}</a></h6>".format(
+            reverse_lazy('expense-category-add'), "Did u know u can add new category here ?"))
+
+        return context
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+
+        form.instance.budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
+        return super().form_valid(form)
 
 
 class IncomeAddView(ProfileRequiredMixin, CreateView):
@@ -129,8 +157,12 @@ class IncomeAddView(ProfileRequiredMixin, CreateView):
     def get_success_url(self) -> str:
         budget_id = self.kwargs['budget_pk']
         return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
-    #pk_url_kwarg = 'id'
-    # fields='__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Add new Income"
+        context['heading'] = context['title']
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         budget = Budget.objects.get(pk=kwargs['budget_pk'])
@@ -140,6 +172,6 @@ class IncomeAddView(ProfileRequiredMixin, CreateView):
 
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
-        #self.object = form.save(commit=False)
+
         form.instance.budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
         return super().form_valid(form)
