@@ -23,9 +23,26 @@ Commits were add on regular basis. Made with my best judgement.
     pip install -r requirements.txt
     ```
 2. (Optional) Create `.env` file with configuration variables:
-```text
-DEBUG=False
-ALLOWED_HOSTS=localhost,127.0.0.1
-SECRET_KEY=django-insecure-1=django-insecure-1=django-insecure-1=django-insec
-```
-
+    ```text
+    DEBUG=True
+    ALLOWED_HOSTS=localhost,127.0.0.1
+    SECRET_KEY=django-insecure-1=django-insecure-1=django-insecure-1=django-insec
+    ```
+    Otherwise will be used default settings
+3. Run migrations and load example categories to DB
+    ```
+    python manage.py migrate
+    python manage.py loaddata ExpenseCategories.json
+    ```
+4. (Only once) Create superuser to be able to login and create new users run:
+    ``` 
+    python manage.py createsuperuser
+    ```
+    And follow instructions
+5. Run server! - To start serving app run:
+    ``` 
+    python manage.py runserver
+    ```
+You can now visit it in browser http://127.0.0.1:8000/  
+Admin Panel is under http://127.0.0.1:8000/admin/  
+And You can add user with http://127.0.0.1:8000/admin/auth/user/add/
