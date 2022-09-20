@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Edit Income{% endblock %}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+<h1>Income</h1>
+<form method="post">{% csrf_token %}
+    {{ form.errors }}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="Update" %}
+    <a href="javascript:history.back()" class="btn btn-outline-primary">Cancel</a>
+</form>
+
+{% endblock %}

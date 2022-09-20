@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.urls import reverse
 
 # This is the lowest nominal that can be set in cash flows, could be also 0.05 or 1.0
 MINIMAL_VALUE_NOMINAL = Decimal(
@@ -84,6 +85,9 @@ class Budget(models.Model):
 
     def __str__(self):
         return "{}'s '{}' budget.".format(self.owner.user.username, self.name)
+
+    def get_absolute_url(self):
+        return reverse('budget-detail', kwargs={'pk': self.pk})
 
     def is_owner(self, user_profile):
         return self.owner == user_profile

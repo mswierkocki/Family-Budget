@@ -132,12 +132,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # budget_app
 
-# This is the lowest nominal that can be set in cash flows, could be also 0.05 or 1.0
+# This is the lowest nominal that can be set in cash flows, could be also 0.05 or 1.0, both must be string!
 BUDGET_MINIMAL_VALUE_NOMINAL_STR = '0.01'
 
 BUDGET_MAXIMAL_CASHFLOW_VALUE_STR = '1000000'
 
 BUDGET_CURRENCY_SIGN = "€"
+BUDGET_PAGINATION_BY = 5
+BUDGET_DETAILS_PAGINATION_BY = 5
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
