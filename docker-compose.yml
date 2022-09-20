@@ -2,30 +2,40 @@ version: '3.7'
 services:
   db-fba:
     image: mysql:8.0
+    container_name: fba-db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
     volumes:
       - db-fba-volume:/var/lib/mysql
+    networks:
+      - lb-fba-network
+
   web-fba:
     image: web-fba:1.0
-    build: ./web-fba
+    build: .
     container_name: fba-web
+    command:  gunicorn FamilyBudget.wsgi:application --bind 0.0.0.0:8000
     volumes:
        - "./static:/app/static/:ro"
-       - "./budget_app:/app/budget_app/:ro"
-       - "./FamilyBudget:/app/FamilyBudget/:ro"
-       - "./manage.py:/app/:ro"
-       - "./requirements.txt:/app/:ro"
+       - "./media:/app/media/:ro"
+#       - "./budget_app:/app/budget_app/:ro"
+#       - "./FamilyBudget:/app/FamilyBudget/:ro"
+ #      - "./manage.py:/app/:ro"
+ #      - "./requirements.txt:/app/:ro"
+    networks:
+      - lb-fba-network
+
     depends_on:
       - db-fba
   nginx-fba:
     image: nginx-fba:1.19
     build: ./nginx
     container_name: fba-nginx
+    restart: unless-stopped
     volumes_from:
-       -web-fba:ro
+       - web-fba:ro
     ports:
       - 8800:80
     networks:

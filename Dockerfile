@@ -11,9 +11,11 @@ RUN export PYTHONPATH=$PYTHONPATH:/usr/local/lib/$ALPINEPYTHON/site-packages:/us
 
 RUN pip install --upgrade pip
 
-COPY ../requirements.txt ../manage.py .
+COPY requirements.txt /app/requirements.txt
+COPY requirements.PROD.txt /app/requirements.PROD.txt
+COPY manage.py /app/manage.py
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.PROD.txt
 
-COPY ../budget_app /app/budget_app/
-COPY ../FamilyBudget /app/FamilyBudget/
+COPY ./budget_app /app/budget_app/
+COPY ./FamilyBudget /app/FamilyBudget/
