@@ -18,6 +18,6 @@ jobs:
       - run: pip install -r requirements.txt
       
       - name: Flake8
-        run: flake8 . --exclude .git,.venv --count --show-source --statistics --max-line-length=127
+        run: flake8 . --exclude .git,.venv,*migrations* --count --show-source --statistics --max-line-length=127
       - name: Run Django Tests
         run: python manage.py test --noinput
