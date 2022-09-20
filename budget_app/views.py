@@ -44,7 +44,7 @@ class BudgetOwnerRequiredMixin(LoginRequiredMixin):
     """Verify that the current user is owner of budget."""
 
     def dispatch(self, request, *args, **kwargs):
-        if not 'budget_pk' in self.kwargs:
+        if 'budget_pk' not in self.kwargs:
             return HttpResponseForbidden()
         budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
         if budget.owner != self.request.user.profile:
