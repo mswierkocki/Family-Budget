@@ -45,4 +45,7 @@ Commits were add on regular basis. Made with my best judgement.
     ```
 You can now visit it in browser http://127.0.0.1:8000/  
 Admin Panel is under http://127.0.0.1:8000/admin/  
-And You can add user with http://127.0.0.1:8000/admin/auth/user/add/
+And You can add user with http://127.0.0.1:8000/admin/auth/user/add/  
+
+# Extra
+Additional cases and things to take under consideration are in [CASES.md](CASES.md) file.
