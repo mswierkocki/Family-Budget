@@ -34,7 +34,7 @@ Commits were add on regular basis. Made with my best judgement.
     python manage.py migrate
     python manage.py loaddata ExpenseCategories.json
     ```
-4. (Only once) Create superuser to be able to login and create new users run:
+4. (Only once) Create superuser to be able to login as administrator:
     ``` 
     python manage.py createsuperuser
     ```
