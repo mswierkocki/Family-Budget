@@ -21,12 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-1=ud3mwpqczi_my_sej%u3c3ef5+a&v5z=32uq@wwtcv!0v&h8', cast=str)
+SECRET_KEY = config(
+    'SECRET_KEY', default='django-insecure-1=ud3mwpqczi_my_sej%u3c3ef5+a&v5z=32uq@wwtcv!0v&h8', cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*',
+                       cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
 
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
+    'budget_app',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +127,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CONFIGURATION VALUES:
+
+# budget_app
+
+# This is the lowest nominal that can be set in cash flows, could be also 0.05 or 1.0
+BUDGET_MINIMAL_VALUE_NOMINAL_STR = '0.01'
+
+BUDGET_MAXIMAL_CASHFLOW_VALUE_STR = '1000000'
+
+BUDGET_CURRENCY_SIGN = "€"
