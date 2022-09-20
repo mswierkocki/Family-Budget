@@ -1,0 +1,604 @@
+[
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 1,
+        "fields": {
+            "name": "Housing"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 2,
+        "fields": {
+            "name": "Mortgage or rent"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 3,
+        "fields": {
+            "name": "Property taxes"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 4,
+        "fields": {
+            "name": "Household repairs"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 5,
+        "fields": {
+            "name": "HOA fees"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 6,
+        "fields": {
+            "name": "Transportation"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 7,
+        "fields": {
+            "name": "Car payment"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 8,
+        "fields": {
+            "name": "Car warranty"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 9,
+        "fields": {
+            "name": "Gas"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 10,
+        "fields": {
+            "name": "Tires"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 11,
+        "fields": {
+            "name": "Maintenance and oil changes"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 12,
+        "fields": {
+            "name": "Parking fees"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 13,
+        "fields": {
+            "name": "Repairs"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 14,
+        "fields": {
+            "name": "Registration and DMV Fees"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 15,
+        "fields": {
+            "name": "Food"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 16,
+        "fields": {
+            "name": "Groceries"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 17,
+        "fields": {
+            "name": "Restaurants"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 18,
+        "fields": {
+            "name": "Pet food"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 19,
+        "fields": {
+            "name": "Utilities"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 20,
+        "fields": {
+            "name": "Electricity"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 21,
+        "fields": {
+            "name": "Water"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 22,
+        "fields": {
+            "name": "Garbage"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 23,
+        "fields": {
+            "name": "Phones"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 24,
+        "fields": {
+            "name": "Cable"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 25,
+        "fields": {
+            "name": "Internet"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 26,
+        "fields": {
+            "name": "Clothing"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 27,
+        "fields": {
+            "name": "Adults\u2019 clothing"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 28,
+        "fields": {
+            "name": "Adults\u2019 shoes"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 29,
+        "fields": {
+            "name": "Children\u2019s clothing"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 30,
+        "fields": {
+            "name": "Children\u2019s shoes"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 31,
+        "fields": {
+            "name": "Medical/Healthcare"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 32,
+        "fields": {
+            "name": "Primary care"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 33,
+        "fields": {
+            "name": "Dental care"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 34,
+        "fields": {
+            "name": "Specialty care"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 35,
+        "fields": {
+            "name": "Urgent care"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 36,
+        "fields": {
+            "name": "Medications"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 37,
+        "fields": {
+            "name": "Medical devices"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 38,
+        "fields": {
+            "name": "Insurance"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 39,
+        "fields": {
+            "name": "Health insurance"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 40,
+        "fields": {
+            "name": "Homeowner\u2019s or renter\u2019s insurance"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 41,
+        "fields": {
+            "name": "Home warranty or protection plan"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 42,
+        "fields": {
+            "name": "Auto insurance"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 43,
+        "fields": {
+            "name": "Life insurance"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 44,
+        "fields": {
+            "name": "Disability insurance"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 45,
+        "fields": {
+            "name": "Household Items/Supplies"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 46,
+        "fields": {
+            "name": "Toiletries"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 47,
+        "fields": {
+            "name": "Laundry detergent"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 48,
+        "fields": {
+            "name": "Dishwasher detergent"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 49,
+        "fields": {
+            "name": "Cleaning supplies"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 50,
+        "fields": {
+            "name": "Tools"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 51,
+        "fields": {
+            "name": "Personal"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 52,
+        "fields": {
+            "name": "Gym memberships"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 53,
+        "fields": {
+            "name": "Haircuts"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 54,
+        "fields": {
+            "name": "Salon services"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 55,
+        "fields": {
+            "name": "Cosmetics"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 56,
+        "fields": {
+            "name": "Babysitter"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 57,
+        "fields": {
+            "name": "Subscriptions"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 58,
+        "fields": {
+            "name": "Debt"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 59,
+        "fields": {
+            "name": "Personal loans"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 60,
+        "fields": {
+            "name": "Student loans"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 61,
+        "fields": {
+            "name": "Credit cards"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 62,
+        "fields": {
+            "name": "Retirement"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 63,
+        "fields": {
+            "name": "Financial planning"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 64,
+        "fields": {
+            "name": "Investing"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 65,
+        "fields": {
+            "name": "Education"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 66,
+        "fields": {
+            "name": "Children\u2019s college"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 67,
+        "fields": {
+            "name": "Your college"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 68,
+        "fields": {
+            "name": "School supplies"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 69,
+        "fields": {
+            "name": "Books"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 70,
+        "fields": {
+            "name": "Savings"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 71,
+        "fields": {
+            "name": "Emergency fund"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 72,
+        "fields": {
+            "name": "Big purchases"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 73,
+        "fields": {
+            "name": "Other savings"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 74,
+        "fields": {
+            "name": "Gifts/Donations"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 75,
+        "fields": {
+            "name": "Birthday"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 76,
+        "fields": {
+            "name": "Anniversary"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 77,
+        "fields": {
+            "name": "Wedding"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 78,
+        "fields": {
+            "name": "Christmas"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 79,
+        "fields": {
+            "name": "Special occasion"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 80,
+        "fields": {
+            "name": "Charities"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 81,
+        "fields": {
+            "name": "Entertainment"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 82,
+        "fields": {
+            "name": "Alcohol"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 83,
+        "fields": {
+            "name": "Games"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 84,
+        "fields": {
+            "name": "Movies"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 85,
+        "fields": {
+            "name": "Concerts"
+        }
+    },
+    {
+        "model": "budget_app.expensecategory",
+        "pk": 86,
+        "fields": {
+            "name": "Vacations"
+        }
+    }
+]
