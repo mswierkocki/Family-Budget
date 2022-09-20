@@ -10,4 +10,5 @@ Worth think about:
 * It's possible to create action(ex. admin action) like budget ownership transfer.
 * Current implementation prohibit manual user expense category deletion and also income categories are hardcoded.
 * Budget shared ManyToMany field through permission class that allows to decide if specified user is able to only see budget, or edit them(like add income or expenses) is interesting idea to implement in future.
+* Add localization support is worth consideration
  
