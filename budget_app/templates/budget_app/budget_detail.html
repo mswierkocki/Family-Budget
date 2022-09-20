@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Budget{{ object.name }}{% endblock %}
+{% load bootstrap5 %}
+
+{% load budget_extras %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+<a href="/" class="btn btn-outline-primary">Budget List</a>
+
+<h1>Budget {{ object.name }}{% if is_owner %} -- <a href={% url 'budget-update' budget.pk%}>Edit&Share</a>{%endif%}</h1>
+{% if is_owner %}
+<div class="row">
+    <div class="col"><a class="btn btn-outline-primary" href="{% url 'income-add' object.pk %}">Add Income</a></div>
+    <div class="col"><a class="btn btn-outline-primary" href="{% url 'expense-add' object.pk %}">Add Expense</a></div>
+</div>
+{%endif%}
+<div class="row">
+    <div class="col">Incomes</div>
+    <div class="col">Expenses</div>
+</div>
+{% for inc,exp in combined%}
+<div class="row {% cycle 'bg-light' 'bg-white'%}">
+    <div {%if inc.text %}title="{{inc.text}}"{%endif%} class="col"><a class="btn btn-link" style="text-decoration: none" href="{% if inc %}{% url 'income-details' object.pk inc.pk %}{%endif%}">{{inc|default_if_none:"--"}}</a></div>
+    <div {%if exp.text %}title="{{exp.text}}"{%endif%} class="col"><a class="text-decoration-none btn btn-default" href="{% if exp %}{% url 'expense-details' object.pk exp.pk %}{%endif%}">{{exp|default_if_none:"--"}}</a></div>
+</div>
+{%endfor%}
+<div class="row">
+    <div class="col">Total</div>
+    
+</div>
+<div class="row bg-secondary">
+
+    <div class="col">{{total_income|currency}}</div>
+    <div class="col">{{total_expenses|currency}}</div>
+</div>
+<div class="row {% if total_income|subtract:total_expenses > 0 %} bg-success {%else%} bg-danger{%endif%}">
+    <div class="col">Sum:</div>
+    <div class="col">{{total_income|subtract:total_expenses|currency}}</div>
+    <div class="col"></div>
+</div>
+
+{% comment %} 
+{% for ex in object.expense.all %}
+  {{ ex }}
+{% endfor %
+
+{{object.expense.all}}
+{% for ex in object.expense.all %}
+  {{ ex }}
+{% endfor %}
+<p>asd</p>
+{{object.income}} {% endcomment %}
+{% endblock %}

@@ -1,10 +1,28 @@
+import itertools
+from decimal import Decimal
+
 # Django Related
+from django.shortcuts import render
+from django.core.paginator import Paginator
+from django.urls import reverse_lazy
 from django.views.generic import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseForbidden
+from django.db.models import Sum
+from django.conf import settings
 
+#app related
+from .forms import BudgetUpdateForm, NewIncomeForm
+from .models import Budget, Income, Expense, ExpenseCategory
 
-from budget_app.models import Budget
-
+# Constants
+BUDGET_PAGINATION_BY = getattr(settings, "BUDGET_PAGINATION_BY", 10)
+BUDGET_DETAILS_PAGINATION_BY = getattr(
+    settings, "BUDGET_DETAILS_PAGINATION_BY", 10)
+TWOPLACES = Decimal(10) ** -2
+# Mixins
 
 class ProfileRequiredMixin(LoginRequiredMixin):
     """Verify that the current user has profile."""
@@ -13,6 +31,16 @@ class ProfileRequiredMixin(LoginRequiredMixin):
         if not hasattr(request.user, 'profile'):
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
+
+
+class OwnerRequiredMixin(ProfileRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().owner != self.request.user.profile:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
+
+TWOPLACES = Decimal(10) ** -2
 # Create your views here.
 
 
@@ -28,3 +56,90 @@ class HomeView(ProfileRequiredMixin, ListView):
 
     def get_queryset(self):
         return Budget.objects.filter(owner=self.request.user.profile)
+class BudgetCreateView(ProfileRequiredMixin,CreateView):
+    model = Budget
+    fields=['name']
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        #self.object = form.save(commit=False)
+        form.instance.owner = self.request.user.profile
+        return super().form_valid(form)
+class BudgetDetailView(ProfileRequiredMixin, DetailView):
+    model = Budget
+    paginate_by = 2
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def dispatch(self, request, *args, **kwargs):
+        request_user = self.request.user.profile
+        object = self.get_object()
+        if not request_user == object.owner:
+            if request_user not in object.shared.all():
+                return HttpResponseForbidden()
+        return super(BudgetDetailView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BudgetDetailView, self).get_context_data(**kwargs)
+        incomes = self.object.income.all()
+        expenses = self.object.expense.all()
+        total_income = incomes.aggregate(Sum('value'))
+        total_expenses = expenses.aggregate(Sum('value'))
+        combined_list = itertools.zip_longest(incomes, expenses)
+        context['combined'] = list(combined_list)
+        context['total_income'] = Decimal(
+            total_income['value__sum'] or '0').quantize(TWOPLACES)
+        context['total_expenses'] = Decimal(
+            total_expenses['value__sum'] or '0').quantize(TWOPLACES)
+        context['is_owner'] = self.object.owner == self.request.user.profile
+
+        return context
+
+
+class BudgetUpdateView(OwnerRequiredMixin, UpdateView):
+    model = Budget
+    template_name_suffix = '_form_update'
+    form_class = BudgetUpdateForm
+
+
+class BudgetDeleteView(OwnerRequiredMixin, DeleteView):
+    model = Budget
+    success_url = reverse_lazy('budget-list')
+
+
+class ExpenseCategoryAddView(CreateView, ProfileRequiredMixin):
+    model = ExpenseCategory
+    template_name = 'budget_app/default_form.html'
+
+
+class ExpenseAddView(CreateView, ProfileRequiredMixin):
+    model = Expense
+    template_name = 'budget_app/default_form.html'
+
+    def get_success_url(self) -> str:
+        budget_id = self.kwargs['budget_pk']
+        return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
+
+
+class IncomeAddView(ProfileRequiredMixin, CreateView):
+    model = Income
+    form_class = NewIncomeForm
+    template_name = 'budget_app/default_form.html'
+
+    def get_success_url(self) -> str:
+        budget_id = self.kwargs['budget_pk']
+        return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
+    #pk_url_kwarg = 'id'
+    # fields='__all__'
+
+    def dispatch(self, request, *args, **kwargs):
+        budget = Budget.objects.get(pk=kwargs['budget_pk'])
+        if budget.owner != self.request.user.profile:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        #self.object = form.save(commit=False)
+        form.instance.budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
+        return super().form_valid(form)
