@@ -40,6 +40,18 @@ class OwnerRequiredMixin(ProfileRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
+class BudgetOwnerRequiredMixin(LoginRequiredMixin):
+    """Verify that the current user is owner of budget."""
+
+    def dispatch(self, request, *args, **kwargs):
+        if not 'budget_pk' in self.kwargs:
+            return HttpResponseForbidden()
+        budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
+        if budget.owner != self.request.user.profile:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
+
 TWOPLACES = Decimal(10) ** -2
 # Create your views here.
 
@@ -49,6 +61,7 @@ class HomeView(ProfileRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+        # TODO add Pagination
         shared_budgets = Budget.objects.filter(
             shared=self.request.user.profile)
         context['shared_budgets'] = shared_budgets
@@ -87,6 +100,7 @@ class BudgetDetailView(ProfileRequiredMixin, DetailView):
         context = super(BudgetDetailView, self).get_context_data(**kwargs)
         incomes = self.object.income.all()
         expenses = self.object.expense.all()
+        # TODO add Pagination
         total_income = incomes.aggregate(Sum('value'))
         total_expenses = expenses.aggregate(Sum('value'))
         combined_list = itertools.zip_longest(incomes, expenses)
@@ -124,14 +138,23 @@ class ExpenseCategoryAddView(CreateView, ProfileRequiredMixin):
         return context
 
 
-class ExpenseAddView(CreateView, ProfileRequiredMixin):
-    model = Expense
+class CashFlowAddView(BudgetOwnerRequiredMixin, CreateView):
     template_name = 'budget_app/default_form.html'
-    form_class = NewExpenseForm
 
     def get_success_url(self) -> str:
         budget_id = self.kwargs['budget_pk']
         return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+
+        form.instance.budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
+        return super().form_valid(form)
+
+
+class ExpenseAddView(CashFlowAddView):
+    model = Expense
+    form_class = NewExpenseForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -142,21 +165,10 @@ class ExpenseAddView(CreateView, ProfileRequiredMixin):
 
         return context
 
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
 
-        form.instance.budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
-        return super().form_valid(form)
-
-
-class IncomeAddView(ProfileRequiredMixin, CreateView):
+class IncomeAddView(CashFlowAddView):
     model = Income
     form_class = NewIncomeForm
-    template_name = 'budget_app/default_form.html'
-
-    def get_success_url(self) -> str:
-        budget_id = self.kwargs['budget_pk']
-        return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -164,14 +176,18 @@ class IncomeAddView(ProfileRequiredMixin, CreateView):
         context['heading'] = context['title']
         return context
 
-    def dispatch(self, request, *args, **kwargs):
-        budget = Budget.objects.get(pk=kwargs['budget_pk'])
-        if budget.owner != self.request.user.profile:
-            return HttpResponseForbidden()
-        return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
+class CashFlowDetailView(BudgetOwnerRequiredMixin, UpdateView):
+    fields = ["category", "value", 'date', 'text']
 
-        form.instance.budget = Budget.objects.get(pk=self.kwargs['budget_pk'])
-        return super().form_valid(form)
+    def get_success_url(self) -> str:
+        budget_id = self.kwargs['budget_pk']
+        return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
+
+
+class IncomeDetailView(CashFlowDetailView):
+    model = Income
+
+
+class ExpenseDetailView(CashFlowDetailView):
+    model = Expense

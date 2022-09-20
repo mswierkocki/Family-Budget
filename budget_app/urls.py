@@ -18,9 +18,9 @@ urlpatterns = [
     path('budget/<int:budget_pk>/expense/',
          views.ExpenseAddView.as_view(), name="expense-add"),
     path('budget/<int:budget_pk>/income/<int:pk>',
-         views.IncomeAddView.as_view(), name="income-details"),
+         views.IncomeDetailView.as_view(), name="income-details"),
     path('budget/<int:budget_pk>/expense/<int:pk>',
-         views.ExpenseAddView.as_view(), name="expense-details"),
+         views.ExpenseDetailView.as_view(), name="expense-details"),
     path('expense/category/add/', views.ExpenseCategoryAddView.as_view(),
          name="expense-category-add"),
 ]

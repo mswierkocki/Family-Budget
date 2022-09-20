@@ -26,6 +26,11 @@
     <div class="col">Incomes</div>
     <div class="col">Expenses</div>
 </div>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-6 text-center">Filter</div>
+    <div class="col"></div>
+</div>
 {% for inc,exp in combined%}
 <div class="row {% cycle 'bg-light' 'bg-white'%}">
     <div {%if inc.text %}title="{{inc.text}}"{%endif%} class="col"><a class="btn btn-link" style="text-decoration: none" href="{% if inc %}{% url 'income-details' object.pk inc.pk %}{%endif%}">{{inc|default_if_none:"--"}}</a></div>
