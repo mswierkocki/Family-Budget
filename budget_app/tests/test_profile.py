@@ -16,5 +16,3 @@ class ProfileTestCase(TestCase):
         ret = Profile.objects.get(user=self.test_user)
         self.assertIsNotNone(ret)
         self.assertEqual(ret.user, self.test_user)
-        self.assertIsNone(ret)
-        self.assertNotEqual(ret.user, self.test_user)
