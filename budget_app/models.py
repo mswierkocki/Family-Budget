@@ -131,6 +131,19 @@ class Income(CashFlow):
         SALARY = 'w', 'Salary'
         BONUS = 'b', 'Bonus'
         SCHOLARSHIP = 's', 'Scholarship'
+        PENSION = 'p', 'Pension'
+        FAMILY_BENEFITS = 'fb', 'Family Benefits'
+        FRANCHISE = 'f', 'Franchise'
+        INTEREST = 'i', 'Interest'
+        AFFILIATE_PROGRAMS = 'ap', 'Affiliate Programs'
+        INVESTMENT = 'iv', 'Investment'
+        DIVIDEND = 'd', 'Dividend'
+        LEASE = 'l', 'Lease'
+        STOCK_MARKET = 'sm', 'Stock Market'
+        FUNDS = 'fn', 'Funds'
+        DEPOSITS = 'de', 'Deposits'
+        POCKET_MONEY = 'pm', 'Pocket Money'
+        OTHER = 'o', 'Other'
 
     category = models.CharField(
         max_length=2,
