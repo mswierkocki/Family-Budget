@@ -7,13 +7,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [
+                       s.strip() for s in v.split(',')])
 SECRET_KEY = config('SECRET_KEY')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '/path/')
 MEDIA_URL = '/path/'
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/') 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 MIDDLEWARE = [
@@ -31,8 +32,8 @@ DATABASES = {
         'ENGINE': config('DATABASE_ENGINE'),
         'NAME': config('DATABASE_NAME'),
         'USER': config('DATABASE_USER'),
-        'PASSWORD':config('DATABASE_PASSWORD'),
-        'PORT':config('DATABASE_PORT',default='3306',cast=str),
-        'HOST':config('DATABASE_HOST',cast=str),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'PORT': config('DATABASE_PORT', default='3306', cast=str),
+        'HOST': config('DATABASE_HOST', cast=str),
     }
 }

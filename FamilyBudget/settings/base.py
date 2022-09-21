@@ -78,8 +78,6 @@ WSGI_APPLICATION = 'FamilyBudget.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -128,13 +126,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # budget_app
 
 # This is the lowest nominal that can be set in cash flows, could be also 0.05 or 1.0, both must be string!
-BUDGET_MINIMAL_VALUE_NOMINAL_STR = config('BUDGET_MINIMAL_VALUE_NOMINAL_STR',cast=str,default='0.01')
+BUDGET_MINIMAL_VALUE_NOMINAL_STR = config(
+    'BUDGET_MINIMAL_VALUE_NOMINAL_STR', cast=str, default='0.01')
 
-BUDGET_MAXIMAL_CASHFLOW_VALUE_STR = config('BUDGET_MAXIMAL_CASHFLOW_VALUE_STR',cast=str,default='1000000')
+BUDGET_MAXIMAL_CASHFLOW_VALUE_STR = config(
+    'BUDGET_MAXIMAL_CASHFLOW_VALUE_STR', cast=str, default='1000000')
 
-BUDGET_CURRENCY_SIGN = config('BUDGET_CURRENCY_SIGN',cast=str,default="€")
-BUDGET_PAGINATION_BY = config('BUDGET_PAGINATION_BY',cast=int,default=10)
-BUDGET_DETAILS_PAGINATION_BY = config('BUDGET_DETAILS_PAGINATION_BY',cast=int,default=10)
+BUDGET_CURRENCY_SIGN = config('BUDGET_CURRENCY_SIGN', cast=str, default="€")
+BUDGET_PAGINATION_BY = config('BUDGET_PAGINATION_BY', cast=int, default=10)
+BUDGET_DETAILS_PAGINATION_BY = config(
+    'BUDGET_DETAILS_PAGINATION_BY', cast=int, default=10)
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
