@@ -21,10 +21,6 @@ services:
     volumes:
        - "./static:/app/static/"
        - "./media:/app/media/"
-#       - "./budget_app:/app/budget_app/:ro"
-#       - "./FamilyBudget:/app/FamilyBudget/:ro"
- #      - "./manage.py:/app/:ro"
- #      - "./requirements.txt:/app/:ro"
     networks:
       - lb-fba-network
     environment:

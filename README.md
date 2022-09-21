@@ -1,4 +1,5 @@
 # Family Budget
+![main workflow](https://github.com/mswierkocki/Family-Budget/actions/workflows/main.yml/badge.svg) ![develop workflow](https://github.com/mswierkocki/Family-Budget/actions/workflows/develop.yml/badge.svg)    
 ### Simple Family Budget APP
 **Description**  
 Family Budget example app based on [task](TASKS.md).
@@ -29,7 +30,7 @@ Commits were add on regular basis. Made with my best judgement.
     source .venv/bin/activate
     pip install -r requirements.txt
     ```
-2. (Optional) Create `.env` file with configuration variables:
+2. (Optional) Create `.env` file with configuration variables or use defaults:
     ```text
     DEBUG=True
     ALLOWED_HOSTS=localhost,127.0.0.1
