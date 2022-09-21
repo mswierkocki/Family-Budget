@@ -17,6 +17,7 @@ services:
     build: .
     container_name: fba-web
     command:  gunicorn FamilyBudget.wsgi:application --bind 0.0.0.0:8000
+
     volumes:
        - "./static:/app/static/:ro"
        - "./media:/app/media/:ro"
@@ -26,7 +27,17 @@ services:
  #      - "./requirements.txt:/app/:ro"
     networks:
       - lb-fba-network
-
+    environment:
+      - APP_ENV=${APP_ENV:-prod}
+      - DEBUG=${DEBUG:-False}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-*,}
+      - DATABASE_ENGINE=${DATABASE:-django.db.backends.mysql}
+      - DATABASE_NAME=${DATABASE_NAME:-mysql}
+      - DATABASE_USER=${DATABASE_USER:-root}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:-example}
+      - DATABASE_HOST=${DATABASE_HOST:-mysql+pymysql://fba-db}
+      - DATABASE_PORT=${DATABASE_PORT:-3306}
     depends_on:
       - db-fba
   nginx-fba:
