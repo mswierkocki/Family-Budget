@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+
+{% block content %}
+
+<form method="post" >
+    {% csrf_token %}
+    
+    {% bootstrap_form form %}
+    
+ 
+    {% bootstrap_button button_type="submit" content="Log in!" %}
+    
+</form>
+{% endblock %}

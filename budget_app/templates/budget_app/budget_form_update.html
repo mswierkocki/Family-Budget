@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Add Budget{% endblock %}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+    {{ form.errors }}
+    {% bootstrap_form form %}
+    {% bootstrap_form_errors form %}
+    {% bootstrap_button button_type="submit" content="Save" %}
+    <a class='btn btn-primary' href='{% url 'budget-detail' object.pk %}'>Cancel</a>
+    <a class='btn btn-danger' href='{% url 'budget-delete' object.pk %}'>Delete</a>
+</form>
+
+{% endblock %}

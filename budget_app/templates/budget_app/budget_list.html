@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% block content %}
+  <h1>My Budget List</h1>
+  <h2><a class="btn btn-success" href="{%url 'budget-add' %}">Create new Budget</a></h2>
+  {% if budget_list %}
+  <ul>
+    {% for budget in budget_list %}
+      <li>
+        <a href="{{ budget.get_absolute_url }}">{{ budget.name }}</a> 
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% else %}
+    <p>You don't have any budget :( yet! <a href="{%url 'budget-add' %}">Add new.</a> </p>
+  {% endif %}
+  
+  {% if shared_budgets %}
+  <h1>Budgets shared for You</h1>
+  <ul>
+    {% for budget in shared_budgets %}
+      <li>
+        <a href="{{ budget.get_absolute_url }}">{{ budget.name }} by {{budget.owner.user.username}}</a> 
+      </li>
+    {% endfor %}
+  </ul>
+   
+  {% else %}
+    <p>nobody shared their budget</p>
+  {% endif %}
+
+
+{% endblock %}
