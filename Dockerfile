@@ -23,6 +23,7 @@ RUN export PYTHONPATH=$PYTHONPATH:/usr/local/lib/$ALPINEPYTHON/site-packages:/us
 RUN pip install --upgrade pip
 COPY requirements.txt /app/requirements.txt
 COPY requirements.PROD.txt /app/requirements.PROD.txt
+COPY ExpenseCategories.json /app/ExpenseCategories.json
 COPY manage.py /app/manage.py
 
 RUN pip install -r requirements.PROD.txt
