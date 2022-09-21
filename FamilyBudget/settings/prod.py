@@ -32,5 +32,7 @@ DATABASES = {
         'NAME': config('DATABASE_NAME'),
         'USER': config('DATABASE_USER'),
         'PASSWORD':config('DATABASE_PASSWORD'),
+        'PORT':config('DATABASE_PORT',default=3306,cast=int),
+        'HOST':config('DATABASE_HOST',cast=str),
     }
 }
