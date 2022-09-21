@@ -1,0 +1,61 @@
+version: '3.7'
+services:
+  db-fba:
+    image: mysql:8.0
+    container_name: fba-db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - db-fba-volume:/var/lib/mysql
+    networks:
+      - lb-fba-network
+
+  web-fba:
+    image: web-fba:1.0
+    build: .
+    container_name: fba-web
+    command:  gunicorn FamilyBudget.wsgi:application --bind 0.0.0.0:8000
+
+    volumes:
+       - "./static:/app/static/"
+       - "./media:/app/media/"
+#       - "./budget_app:/app/budget_app/:ro"
+#       - "./FamilyBudget:/app/FamilyBudget/:ro"
+ #      - "./manage.py:/app/:ro"
+ #      - "./requirements.txt:/app/:ro"
+    networks:
+      - lb-fba-network
+    environment:
+      - APP_ENV=${APP_ENV:-prod}
+      - DEBUG=${DEBUG:-False}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-*,}
+      - DATABASE_ENGINE=${DATABASE:-django.db.backends.mysql}
+      - DATABASE_NAME=${DATABASE_NAME:-mysql}
+      - DATABASE_USER=${DATABASE_USER:-root}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:-example}
+      - DATABASE_HOST=${DATABASE_HOST:-mysql+pymysql://fba-db}
+      - DATABASE_PORT=${DATABASE_PORT:-3306}
+    depends_on:
+      - db-fba
+  nginx-fba:
+    image: nginx-fba:1.19
+    build: ./nginx
+    container_name: fba-nginx
+    restart: unless-stopped
+    volumes_from:
+       - web-fba:ro
+    ports:
+      - 8800:80
+    networks:
+      - lb-fba-network
+    depends_on:
+      - web-fba
+networks:
+  lb-fba-network:
+    name: lb-fba-network
+    external: false
+volumes:
+  db-fba-volume:

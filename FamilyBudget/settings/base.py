@@ -14,7 +14,7 @@ from pathlib import Path
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -77,13 +77,6 @@ WSGI_APPLICATION = 'FamilyBudget.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -133,13 +126,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # budget_app
 
 # This is the lowest nominal that can be set in cash flows, could be also 0.05 or 1.0, both must be string!
-BUDGET_MINIMAL_VALUE_NOMINAL_STR = '0.01'
+BUDGET_MINIMAL_VALUE_NOMINAL_STR = config(
+    'BUDGET_MINIMAL_VALUE_NOMINAL_STR', cast=str, default='0.01')
 
-BUDGET_MAXIMAL_CASHFLOW_VALUE_STR = '1000000'
+BUDGET_MAXIMAL_CASHFLOW_VALUE_STR = config(
+    'BUDGET_MAXIMAL_CASHFLOW_VALUE_STR', cast=str, default='1000000')
 
-BUDGET_CURRENCY_SIGN = "€"
-BUDGET_PAGINATION_BY = 5
-BUDGET_DETAILS_PAGINATION_BY = 5
+BUDGET_CURRENCY_SIGN = config('BUDGET_CURRENCY_SIGN', cast=str, default="€")
+BUDGET_PAGINATION_BY = config('BUDGET_PAGINATION_BY', cast=int, default=10)
+BUDGET_DETAILS_PAGINATION_BY = config(
+    'BUDGET_DETAILS_PAGINATION_BY', cast=int, default=10)
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
