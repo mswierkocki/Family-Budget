@@ -137,6 +137,9 @@ BUDGET_CURRENCY_SIGN = config('BUDGET_CURRENCY_SIGN', cast=str, default="€")
 BUDGET_PAGINATION_BY = config('BUDGET_PAGINATION_BY', cast=int, default=10)
 BUDGET_DETAILS_PAGINATION_BY = config(
     'BUDGET_DETAILS_PAGINATION_BY', cast=int, default=10)
+BUDGET_API_PAGINATION_BY = config(
+    'BUDGET_API_PAGINATION_BY', cast=int, default=BUDGET_PAGINATION_BY)
+
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -156,5 +159,9 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': BUDGET_API_PAGINATION_BY
 
 }
