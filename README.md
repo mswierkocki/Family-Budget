@@ -19,6 +19,9 @@ Commits were add on regular basis. Made with my best judgement.
 - Django 3.0
     - decouple
     - bootstrapV5
+    - REST framework
+    - django-filters
+    - django-seed
 - docker-compose
 - Gitlab Actions
 
@@ -30,6 +33,7 @@ Commits were add on regular basis. Made with my best judgement.
     source .venv/bin/activate
     pip install -r requirements.txt
     ```
+>> Note: requirements.txt is minimal to work, dev friendly req are in requirements.DEV.txt
 2. (Optional) Create `.env` file with configuration variables or use defaults:
     ```text
     DEBUG=True
