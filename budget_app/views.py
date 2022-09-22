@@ -7,9 +7,11 @@ from django.utils.safestring import mark_safe
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
+from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
 from django.db.models import Sum
+
 from django.conf import settings
 
 # app related
@@ -58,13 +60,21 @@ TWOPLACES = Decimal(10) ** -2
 
 class HomeView(ProfileRequiredMixin, ListView):
     model = Budget
+    paginate_by = 5  # BUDGET_PAGINATION_BY
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        # TODO add Pagination
         shared_budgets = Budget.objects.filter(
             shared=self.request.user.profile)
-        context['shared_budgets'] = shared_budgets
+
+        shared_paginator = Paginator(shared_budgets, self.paginate_by)
+        shared_budgets_page = shared_paginator.get_page(
+            self.request.GET.get('shared_page'))
+
+        context['shared_budgets_list'] = shared_budgets_page
+        context['shared_paginator'] = shared_paginator
+
+        context['is_shared_paginated'] = shared_paginator.num_pages > 1
         return context
 
     def get_queryset(self):
@@ -160,6 +170,8 @@ class ExpenseAddView(CashFlowAddView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Add new Expense"
         context['heading'] = context['title']
+        # TODO: Maby use htmlx for that ? ofc we could move this to specialized template(like expense_form)
+        # instead of using this 'hack'
         context['additional'] = mark_safe("<h6><a href={}>{}</a></h6>".format(
             reverse_lazy('expense-category-add'), "Did u know u can add new category here ?"))
 
