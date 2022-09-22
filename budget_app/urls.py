@@ -1,9 +1,13 @@
 from django.urls import path
 
+from django.conf.urls import include
 from django.contrib.auth.decorators import login_required
+from rest_framework import routers
 
-from budget_app import views
+from budget_app import views, views_api
 
+router = routers.DefaultRouter()
+router.register(r'budget', views_api.BudgetAPI, basename='budget-api')
 
 urlpatterns = [
     path('', login_required(views.HomeView.as_view()), name="home"),
@@ -23,4 +27,5 @@ urlpatterns = [
          views.ExpenseDetailView.as_view(), name="expense-details"),
     path('expense/category/add/', views.ExpenseCategoryAddView.as_view(),
          name="expense-category-add"),
+    path('api/', include(router.urls)),
 ]
