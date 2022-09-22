@@ -7,7 +7,7 @@ from rest_framework import filters
 
 from rest_framework.permissions import BasePermission, IsAdminUser
 
-from .serializers import BudgetSerializer
+from .serializers import BudgetSerializer,BudgetDetailSerializer
 
 from budget_app.models import Budget
 from budget_app.filters import IsOwnerFilterBackend
@@ -33,6 +33,9 @@ class BudgetAPI(viewsets.ModelViewSet):
         return Budget.objects.filter(owner=self.request.user.profile)
 
     def get_serializer_class(self):
-        # if self.action == 'create':
+        if self.action == 'list' and self.detail:
+            print("GOT: if self.action == 'list' and self.detail:")
+        if self.action == 'retrieve':
+            return BudgetDetailSerializer
 
         return BudgetSerializer
