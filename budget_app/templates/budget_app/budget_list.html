@@ -11,15 +11,15 @@
       </li>
     {% endfor %}
   </ul>
-
   {% else %}
-    <p>You don't have any budget :( yet! <a href="{%url 'budget-add' %}">Add new.</a> </p>
+  <p>You don't have any budget :( yet! <a href="{%url 'budget-add' %}">Add new.</a> </p>
   {% endif %}
+  {% include "budget_app/pagination_control.html" %}
   
-  {% if shared_budgets %}
-  <h1>Budgets shared for You</h1>
+  {% if shared_budgets_list %}
+  <h1>Budgets shared with You</h1>
   <ul>
-    {% for budget in shared_budgets %}
+    {% for budget in shared_budgets_list %}
       <li>
         <a href="{{ budget.get_absolute_url }}">{{ budget.name }} by {{budget.owner.user.username}}</a> 
       </li>
@@ -29,6 +29,6 @@
   {% else %}
     <p>nobody shared their budget</p>
   {% endif %}
-
+  {% include "budget_app/pagination_control.html" with  page_obj=shared_budgets_list paginator=shared_paginator is_paginated=is_shared_paginated page_param_name="shared_page" %}
 
 {% endblock %}

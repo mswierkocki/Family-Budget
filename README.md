@@ -12,13 +12,17 @@ Commits were add on regular basis. Made with my best judgement.
 - Users can create a list of any number of budgets 
 - Users can share it with any number of users.
 - The budget consists of income and expenses.
-- Budgets are grouped into categories.
+- They are grouped into categories.
+- REST Api is under /api/
 
 **Tech**
 - Python 3.8
 - Django 3.0
     - decouple
     - bootstrapV5
+    - REST framework
+    - django-filters
+    - django-seed
 - docker-compose
 - Gitlab Actions
 
@@ -30,6 +34,7 @@ Commits were add on regular basis. Made with my best judgement.
     source .venv/bin/activate
     pip install -r requirements.txt
     ```
+>> Note: requirements.txt is minimal to work, dev friendly req are in requirements.DEV.txt
 2. (Optional) Create `.env` file with configuration variables or use defaults:
     ```text
     DEBUG=True

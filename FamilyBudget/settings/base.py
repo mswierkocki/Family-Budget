@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
+    'rest_framework',
     'budget_app',
 ]
 
@@ -133,10 +134,34 @@ BUDGET_MAXIMAL_CASHFLOW_VALUE_STR = config(
     'BUDGET_MAXIMAL_CASHFLOW_VALUE_STR', cast=str, default='1000000')
 
 BUDGET_CURRENCY_SIGN = config('BUDGET_CURRENCY_SIGN', cast=str, default="€")
-BUDGET_PAGINATION_BY = config('BUDGET_PAGINATION_BY', cast=int, default=10)
+BUDGET_PAGINATION_BY = config('BUDGET_PAGINATION_BY', cast=int, default=5)
 BUDGET_DETAILS_PAGINATION_BY = config(
-    'BUDGET_DETAILS_PAGINATION_BY', cast=int, default=10)
+    'BUDGET_DETAILS_PAGINATION_BY', cast=int, default=5)
+BUDGET_API_PAGINATION_BY = config(
+    'BUDGET_API_PAGINATION_BY', cast=int, default=BUDGET_PAGINATION_BY)
+
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+# Rest framework:
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': BUDGET_API_PAGINATION_BY
+
+}

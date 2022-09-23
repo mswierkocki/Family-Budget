@@ -82,6 +82,7 @@ class Budget(models.Model):
 
     class Meta:
         verbose_name = 'Budget'
+        ordering = ['-id']
 
     def __str__(self):
         return "{}'s '{}' budget.".format(self.owner.user.username, self.name)
@@ -91,6 +92,9 @@ class Budget(models.Model):
 
     def is_owner(self, user_profile):
         return self.owner == user_profile
+
+    def is_sharing(self):
+        return self.shared.count() > 0
 
 
 class CashFlow(models.Model):
