@@ -1,0 +1,102 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$dJ10RrneGh31DmV6sYq0I4$N3Gj1JHnaitlPO5Hq1uhYM7znkMawA19IYLKRwB8Ua8=",
+            "last_login": "2022-09-22T16:06:55.505Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "a@a.pl",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-09-22T15:57:54.743Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$RjXmE0X93pGP53pcLGm9Oi$khQdnKVemuvODnteSognTtucv54kSALpep+FzIdoXvA=",
+            "last_login": "2011-06-14T09:11:43Z",
+            "is_superuser": false,
+            "username": "Usr1",
+            "first_name": "Walter",
+            "last_name": "Moore",
+            "email": "iquinn@example.net",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-09-22T16:05:34Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$h23zUezuvMcqKAimKPO1SZ$wQKSgQ3cxNY9bO8J2CBH7ezyCxLi/HRTbgysIr62ZG8=",
+            "last_login": "1979-05-05T08:44:04Z",
+            "is_superuser": false,
+            "username": "Usr2",
+            "first_name": "Jennifer",
+            "last_name": "Nash",
+            "email": "cynthiapowers@example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-09-22T16:05:34Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$39OC3kzwObPwCinnidQjH0$YYcHgKltWrivA+h8WA9EuJpN1m3v32fCuxHpSE8mIP8=",
+            "last_login": "2006-08-05T01:59:44Z",
+            "is_superuser": false,
+            "username": "Usr3",
+            "first_name": "Regina",
+            "last_name": "Bowman",
+            "email": "jameshooper@example.net",
+            "is_staff": false,
+            "is_active": false,
+            "date_joined": "2022-09-22T16:05:34Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "budget_app.profile",
+        "pk": 1,
+        "fields": {
+            "user": 1
+        }
+    },
+    {
+        "model": "budget_app.profile",
+        "pk": 2,
+        "fields": {
+            "user": 2
+        }
+    },
+    {
+        "model": "budget_app.profile",
+        "pk": 3,
+        "fields": {
+            "user": 3
+        }
+    },
+    {
+        "model": "budget_app.profile",
+        "pk": 4,
+        "fields": {
+            "user": 4
+        }
+    }
+]

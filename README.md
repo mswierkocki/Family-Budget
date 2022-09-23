@@ -12,7 +12,8 @@ Commits were add on regular basis. Made with my best judgement.
 - Users can create a list of any number of budgets 
 - Users can share it with any number of users.
 - The budget consists of income and expenses.
-- Budgets are grouped into categories.
+- They are grouped into categories.
+- REST Api is under /api/
 
 **Tech**
 - Python 3.8
