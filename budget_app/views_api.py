@@ -52,6 +52,16 @@ class BudgetAPI(viewsets.ModelViewSet):
         
         serializer = IncomeSerializer(budget.income.all(),many=True)
         return Response(serializer.data)
+    
+    @action(detail=True,url_name="list-transaction")
+    def transaction(self,request=None,pk=None,*args,**kwargs):
+        budget=self.get_object()
+        # budget.income.all()
+        # shared_paginator = Paginator(shared_budgets, self.paginate_by)
+        # shared_budgets_page = shared_paginator.get_page(
+        #     self.request.GET.get('shared_page'))
+        serializer = IncomeSerializer(budget.income.all(),many=True)
+        return Response(serializer.data)
 class IncomeAPI(viewsets.ModelViewSet):
     """
     Income Api
