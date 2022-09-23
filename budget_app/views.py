@@ -134,7 +134,6 @@ class BudgetDeleteView(OwnerRequiredMixin, DeleteView):
     model = Budget
     success_url = reverse_lazy('budget-list')
 
-
 class ExpenseCategoryAddView(CreateView, ProfileRequiredMixin):
     model = ExpenseCategory
     fields = ['name']
@@ -188,10 +187,15 @@ class IncomeAddView(CashFlowAddView):
         context['heading'] = context['title']
         return context
 
-
+   
 class CashFlowDetailView(BudgetOwnerRequiredMixin, UpdateView):
     fields = ["category", "value", 'date', 'text']
-
+    def get(self, request, *args, **kwargs):
+        return super().get(request,*args,**kwargs)
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        return context
     def get_success_url(self) -> str:
         budget_id = self.kwargs['budget_pk']
         return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
@@ -202,4 +206,19 @@ class IncomeDetailView(CashFlowDetailView):
 
 
 class ExpenseDetailView(CashFlowDetailView):
+    model = Expense
+
+class CashFlowDeleteView(BudgetOwnerRequiredMixin, DeleteView):
+    template_name = None
+    def get_success_url(self) -> str:
+        budget_id = self.kwargs['budget_pk']
+        return reverse_lazy('budget-detail', kwargs={'pk': budget_id},)
+    # no confirmation
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+    
+class IncomeDeleteView(CashFlowDeleteView):
+    model = Income
+
+class ExpenseDeleteView(CashFlowDeleteView):
     model = Expense
