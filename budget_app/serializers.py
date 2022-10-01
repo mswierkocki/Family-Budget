@@ -12,8 +12,8 @@ class IncomeSerializer(serializers.ModelSerializer):
     category = serializers.ChoiceField(choices=Income.Category.choices, source='get_category_display')
     class Meta:
         model = Income
-        # fields = '__all__'
-        exclude =['budget']
+        fields = '__all__'
+        #exclude =['budget']
         
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
