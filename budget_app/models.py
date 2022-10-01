@@ -19,6 +19,8 @@ MAXIMAL_CASHFLOW_VALUE = Decimal(
     getattr(settings, "BUDGET_MAXIMAL_CASHFLOW_VALUE_STR", '1000000'))
 CURRENCY_SIGN = getattr(settings, "BUDGET_CURRENCY_SIGN", "$")
 
+MAX_DIGIT_CASHFLOW = math.ceil(math.log10(MAXIMAL_CASHFLOW_VALUE))+3
+
 
 def validate_min_cashflow(value):
     if value < MINIMAL_VALUE_NOMINAL:
@@ -115,7 +117,7 @@ class CashFlow(models.Model):
     """
 
     date = models.DateTimeField(default=timezone.now)
-    value = models.DecimalField(max_digits=math.ceil(math.log10(MAXIMAL_CASHFLOW_VALUE))+3,
+    value = models.DecimalField(max_digits=MAX_DIGIT_CASHFLOW,
                                 decimal_places=2, default=0.0, validators=[validate_min_cashflow, validate_max_cashflow])
     budget = models.ForeignKey(
         Budget, related_name="%(class)s", on_delete=models.CASCADE)

@@ -23,8 +23,10 @@ Commits were add on regular basis. Made with my best judgement.
     - REST framework
     - django-filters
     - django-seed
+    - django-rest-multiple-models
 - docker-compose
 - Gitlab Actions
+
 
 # How to
 ## **Install the application in a local environment**
