@@ -1,0 +1,45 @@
+name: Tests Workflows
+run-name: Tests by @${{ github.actor }}
+on:
+  workflow_call:
+    inputs:
+    break_on_linter:
+      required: false
+      type: boolean
+      default: True
+  push:
+    branches: [ test*/** ]
+    # https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+jobs:
+  setup:
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r requirements.txt
+  tests:
+    steps:
+      - name: Flake8
+        #run: flake8 . --exclude .git,.venv,*migrations* --count --show-source --statistics --max-line-length=127
+        run: run_flake.sh ${input.break_on_linter}
+      - name: Run Django Tests
+        run: python manage.py test --noinput
+
+
+
+
+# https://github.com/actions/cache/blob/main/examples.md#python---pip
+#- name: Get pip cache dir
+#  id: pip-cache
+#  run: |
+#    echo "::set-output name=dir::$(pip cache dir)"
+#
+#- name: pip cache
+#  uses: actions/cache@v3
+#  with:
+#    path: ${{ steps.pip-cache.outputs.dir }}
+#    key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+#    restore-keys: |
+#      ${{ runner.os }}-pip-
