@@ -8,7 +8,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: Preparation
-      - run: echo "💡 The ${{ github.repository }} is beeing prepared for develop."
+        run: echo "💡 The ${{ github.repository }} is beeing prepared for develop."
   tests:
     uses: ./.github/workflows/tests.yaml
     with:
