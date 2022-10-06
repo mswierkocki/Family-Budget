@@ -12,6 +12,7 @@ jobs:
   tests:
     name: Test
     uses: ./.github/workflows/tests.yaml
+    
     # with:
     #   break_on_linter: true
   check:
@@ -21,5 +22,5 @@ jobs:
     continue-on-error: false
     steps:
       - name: Run Django check
-        run: ls -all ; python manage.py check
+        run: python Family-Budget/manage.py check
         
