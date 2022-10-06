@@ -2,7 +2,7 @@
 # Exits zero if there is passed argument to the script
 EXITS_ZERO="--exit-zero"
 MAX_LINE="127"
-if [ -z "$1" ]
+if [ -z "$1" ] || [ $1 = "false" ]
   then
     echo "Run  argument is null"
     EXITS_ZERO=""
