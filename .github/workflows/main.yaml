@@ -6,12 +6,12 @@ on:
     branches: [ main ]
 
 jobs:
-  call-workflow-develop:
-    uses: ./.github/workflows/develop.yaml
-    with:
-      continue-on-error: false
+  #call-workflow-develop:
+  #  uses: ./.github/workflows/develop.yaml
+  #  with:
+  #    continue-on-error: false
   deploy-on-heroku:
-    needs: call-workflow-develop
+  #  needs: call-workflow-develop
     uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
     with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
