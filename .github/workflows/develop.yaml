@@ -10,7 +10,7 @@ jobs:
   #     - name: Preparation
   #       run: echo "💡 The ${{ github.repository }} is beeing prepared for develop."
   tests:
-    name: Run tests
+    name: Test
     uses: ./.github/workflows/tests.yaml
     with:
       break_on_linter: false
