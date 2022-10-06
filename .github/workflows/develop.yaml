@@ -12,8 +12,8 @@ jobs:
   tests:
     name: Test
     uses: ./.github/workflows/tests.yaml
-    with:
-      break_on_linter: true
+    # with:
+    #   break_on_linter: true
   check:
     name: Run check
     runs-on: ubuntu-latest
