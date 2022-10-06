@@ -11,14 +11,19 @@ jobs:
   #  with:
   #    continue-on-error: false
   deploy-on-heroku:
+    name: Run deploy
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+
       - name: Run a one-line script
         run: echo Hello, world!
+        
       - name: Heroku deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-          with:
+        with:
             heroku_api_key: ${{secrets.HEROKU_API_KEY}}
             heroku_app_name: ${{secrets.HEROKU_APP_NAME}} 
             heroku_email: ${{secrets.HEROKU_API_EMAIL}}

@@ -1,7 +1,7 @@
 name: Develop Workflow
-on: 
+on:
   push:
-    branches: [ develop ]
+    branches: [develop]
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -13,7 +13,9 @@ jobs:
     uses: ./.github/workflows/tests.yaml
     with:
       break_on_linter: false
-  run_check:
+  check:
+    name: Run check
+    runs-on: ubuntu-latest
     continue-on-error: false
     steps:
       - name: Run Django check
