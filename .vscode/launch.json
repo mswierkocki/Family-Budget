@@ -5,7 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Django",
+            "name": "Test Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\manage.py",
+            "args": [
+                "test"
+            ],
+            "django": true,
+            "justMyCode": false
+        },
+        {
+            "name": "Dev Django ",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
@@ -16,11 +27,10 @@
             "env": {
                 "DEBUG": "True",
                 "APP_ENV": "DEV"
-
             },
             "envFile": "${workspaceFolder}/.env",
             "django": true,
-            "justMyCode": true
+            "justMyCode": false
         }
     ]
 }

@@ -8,6 +8,11 @@ on:
         required: false
         type: boolean
         default: True
+      continue_with_errors:
+        description: "Should continue on error"
+        required: false
+        type: boolean
+        default: false   
       run_check:
         description: "Whether to run check"
         required: false
@@ -25,6 +30,11 @@ on:
         required: false
         type: boolean
         default: True        
+      run_with_coverage:
+        description: "Whether to run with coverage"
+        required: false
+        type: boolean
+        default: false   
       run_check:
         description: "Whether to run check"
         required: false
@@ -80,6 +90,7 @@ jobs:
 
 
     steps:
+      - continue-on-error: ${{ inputs.continue_with_errors }}
       - name: Checkout v4
         uses: actions/checkout@v3
       - name: Setup python3.9 with cache
