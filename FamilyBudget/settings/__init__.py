@@ -6,6 +6,8 @@ APP_ENV = config('APP_ENV', default="dev", cast=str)
 if APP_ENV == 'prod':
     from .prod import *  
 elif APP_ENV == 'heroku':
-    from .heroku import * 
+    from .heroku import *
+elif APP_ENV == 'github':
+    from .github import * 
 else:
     from .dev import *
