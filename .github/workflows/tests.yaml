@@ -12,42 +12,42 @@ on:
         description: "Should continue on error"
         required: false
         type: boolean
-        default: false   
+        default: false
       run_check:
         description: "Whether to run check"
         required: false
         type: boolean
-        default: false   
+        default: false
       run_on_db:
         description: "Run tests using posgress"
         required: false
         type: boolean
-        default: false 
+        default: false
   workflow_dispatch:
     inputs:
       break_on_linter:
         description: "Set to true to break script on linter"
         required: false
         type: boolean
-        default: True        
+        default: True
       run_with_coverage:
         description: "Whether to run with coverage"
         required: false
         type: boolean
-        default: false   
+        default: false
       run_check:
         description: "Whether to run check"
         required: false
         type: boolean
-        default: false   
+        default: false
       run_on_db:
         description: "Run tests using posgress"
         required: false
         type: boolean
-        default: false 
+        default: false
 
   push:
-    branches: [ test*/** ]
+    branches: [test*/**]
     # https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 jobs:
   test_with_sqlite:
@@ -59,18 +59,22 @@ jobs:
       - name: Setup python3.9 with cache
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-          cache: 'pip' # caching pip dependencies
+          python-version: "3.9"
+          cache: "pip" # caching pip dependencies
       - name: Install base requirements
         run: pip install -r requirements.txt
       - name: Run Flake
+        continue-on-error: ${{ inputs.continue_with_errors }}
         run: ./run_flake.sh ${{ inputs.break_on_linter }}
       - name: Run migrations
+        continue-on-error: ${{ inputs.continue_with_errors }}
         run: python manage.py migrate
       - name: Run Django Tests
-        run: python manage.py test --noinput
+        continue-on-error: ${{ inputs.continue_with_errors }}
+        run: '[[ "${{ inputs.run_with_coverage }}" = true ]] && ./run_coverage.sh || python manage.py test --noinput'
       - name: Run check
-        run:  '[[ "${{ inputs.run_check }}" = true ]] && python manage.py check || true'
+        continue-on-error: ${{ inputs.continue_with_errors }}
+        run: '[[ "${{ inputs.run_check }}" = true ]] && python manage.py check || true'
   test_with_postgress:
     if: ${{ github.event.inputs.run_on_db == 'true' }}
     name: "Test with postgress"
@@ -87,33 +91,35 @@ jobs:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
-
+    env:
+      APP_ENV: "github"
     steps:
-      - continue-on-error: ${{ inputs.continue_with_errors }}
       - name: Checkout v4
         uses: actions/checkout@v3
       - name: Setup python3.9 with cache
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-          cache: 'pip' # caching pip dependencies
+          python-version: "3.9"
+          cache: "pip" # caching pip dependencies
       - name: Install base requirements
         run: pip install -r requirements.txt
-      - name: Set env for postgres db
-        run: echo "{APP_ENV}=github" >> $GITHUB_ENV
+      # - name: Set env for postgres db
+      #   run: echo "{APP_ENV}=github" >> $GITHUB_ENV
+
       - name: Run Flake
+        continue-on-error: ${{ inputs.continue_with_errors }}
         run: ./run_flake.sh ${{ inputs.break_on_linter }}
       - name: Run migrations
+        continue-on-error: ${{ inputs.continue_with_errors }}
         run: python manage.py migrate
       - name: Run Django Tests
+        continue-on-error: ${{ inputs.continue_with_errors }}
         run: python manage.py test --noinput
       - name: Run check
-        run:  '[[ "${{ inputs.run_check }}" = true ]] && python manage.py check || true'
-
+        continue-on-error: ${{ inputs.continue_with_errors }}
+        run: '[[ "${{ inputs.run_check }}" = true ]] && python manage.py check || true'
 # continue on error:
 # https://docs.github.com/en/actions/learn-github-actions/expressions#example-returning-a-json-data-type
-
 
 # https://github.com/actions/cache/blob/main/examples.md#python---pip
 #- name: Get pip cache dir
