@@ -5,6 +5,7 @@ on:
   workflow_call:
     inputs:
       break_on_linter:
+        description: "Break on linter"
         required: false
         type: boolean
         default: True
@@ -13,23 +14,6 @@ on:
         required: false
         type: boolean
         default: false
-      run_check:
-        description: "Whether to run check"
-        required: false
-        type: boolean
-        default: false
-      run_on_db:
-        description: "Run tests using posgress"
-        required: false
-        type: boolean
-        default: false
-  workflow_dispatch:
-    inputs:
-      break_on_linter:
-        description: "Set to true to break script on linter"
-        required: false
-        type: boolean
-        default: True
       run_with_coverage:
         description: "Whether to run with coverage"
         required: false
@@ -42,6 +26,43 @@ on:
         default: false
       run_on_db:
         description: "Run tests using posgress"
+        required: false
+        type: boolean
+        default: false
+      test_with_strategy:
+        description: "Run tests using different python versions"
+        required: false
+        type: boolean
+        default: false
+  workflow_dispatch:
+    inputs:
+      break_on_linter:
+        description: "Break on linter"
+        required: false
+        type: boolean
+        default: True
+      continue_with_errors:
+        description: "Should continue on error"
+        required: false
+        type: boolean
+        default: false
+      run_with_coverage:
+        description: "Whether to run with coverage"
+        required: false
+        type: boolean
+        default: false
+      run_check:
+        description: "Whether to run check"
+        required: false
+        type: boolean
+        default: false
+      run_on_db:
+        description: "Run tests using posgress"
+        required: false
+        type: boolean
+        default: false
+      test_with_strategy:
+        description: "Run tests using different python versions"
         required: false
         type: boolean
         default: false
@@ -115,6 +136,35 @@ jobs:
       - name: Run Django Tests
         continue-on-error: ${{ inputs.continue_with_errors }}
         run: python manage.py test --noinput
+      - name: Run check
+        continue-on-error: ${{ inputs.continue_with_errors }}
+        run: '[[ "${{ inputs.run_check }}" = true ]] && python manage.py check || true'
+  test_with_strategy:
+    if: ${{ github.event.inputs.test_with_strategy == 'true' }}
+    name: "Testing using strategy"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.10','3.11']
+    steps:
+      - name: Checkout v4
+        uses: actions/checkout@v3
+      - name: Setup python3.9 with cache
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip" # caching pip dependencies
+      - name: Install base requirements
+        run: pip install -r requirements.txt
+      - name: Run Flake
+        continue-on-error: ${{ inputs.continue_with_errors }}
+        run: ./run_flake.sh ${{ inputs.break_on_linter }}
+      - name: Run migrations
+        continue-on-error: ${{ inputs.continue_with_errors }}
+        run: python manage.py migrate
+      - name: Run Django Tests
+        continue-on-error: ${{ inputs.continue_with_errors }}
+        run: '[[ "${{ inputs.run_with_coverage }}" = true ]] && ./run_coverage.sh || python manage.py test --noinput'
       - name: Run check
         continue-on-error: ${{ inputs.continue_with_errors }}
         run: '[[ "${{ inputs.run_check }}" = true ]] && python manage.py check || true'

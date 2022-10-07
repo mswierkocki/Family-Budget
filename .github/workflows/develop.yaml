@@ -14,13 +14,26 @@ jobs:
     uses: ./.github/workflows/tests.yaml
     with:
        break_on_linter: true
-       continue_with_errors: true
+       continue_with_errors: false # default: false
+       run_with_coverage: true
+       run_check: false            # default: false
+       run_on_db: false            # default: false
+       test_with_strategy: false   # default: false
   check:
     name: Run check
     runs-on: ubuntu-latest
     needs: tests
     continue-on-error: false
     steps:
+      - name: Checkout v4
+        uses: actions/checkout@v3
+      - name: Setup python (3.9) with cache
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip" # caching pip dependencies
+      - name: Install base requirements
+        run: pip install -r requirements.txt
       - name: Run Django check
-        run: python Family-Budget/manage.py check
+        run: python manage.py check
         
