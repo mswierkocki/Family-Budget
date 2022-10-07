@@ -62,7 +62,7 @@ jobs:
       - name: Run check
         run:  '[[ "${{ inputs.run_check }}" = true ]] && python manage.py check || true'
   test_with_postgress:
-    if: ${{ github.event.inputs.RUN_ON_DB = 'true' }}
+    if: ${{ github.event.inputs.run_on_db == 'true' }}
     name: "Test with postgress"
     runs-on: ubuntu-latest
 
